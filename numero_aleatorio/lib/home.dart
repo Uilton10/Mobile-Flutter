@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -8,35 +9,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  TextEditingController nPeso = TextEditingController();
-  TextEditingController nAltura = TextEditingController();
 
-  String infoResultado = "Informe os valores!";
-
+  String infoResultado = "";
+  String infoPense = "Pense em número de 0 a 10";
   void _calcular() {
     setState(() {
-      double npeso = double.parse(nPeso.text);
-      double naltura = double.parse(nAltura.text);
-      double imc = 0;
-      if (naltura > 0 && npeso > 0){
-         imc = npeso / (naltura*naltura);
-        if (imc < 18.5){
-          infoResultado = "Abaixo do Peso";
-        }else if(imc <= 25){
-          infoResultado = "Peso Normal";
-        }else if(imc <= 30){
-          infoResultado = "Sobrepeso";
-        }else if(imc <= 35){
-          infoResultado = "Obesidade Grau 1";
-        }else if(imc <= 40){
-          infoResultado = "Obesidade Grau 2";
-        }else{
-          infoResultado = "Obesidade Grau 3 ou Mórbida";
-        }
-
-      }else{
-        infoResultado = "Não é possivel realizar o cálculo do IMC";
-      }
+      int naleatorio =  new Random().nextInt(10);
+      infoResultado = naleatorio.toString();
     });
   }
 
@@ -51,9 +30,9 @@ class _HomeState extends State<Home> {
 
   _titulo() {
     return AppBar(
-      title: Text("Calculo do IMC"),
+      title: Text("Jogo Número Aleatorio"),
       centerTitle: true,
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: Colors.black,
     );
   }
 
@@ -64,10 +43,10 @@ class _HomeState extends State<Home> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           _foto(),
-          _campo("Digite o seu peso", nPeso),
-          _campo("Digite a sua altura", nAltura),
-          _botao(),
+          _texto(infoPense),
           _texto(infoResultado),
+          _botao(),
+
         ],
       ),
     );
@@ -77,9 +56,9 @@ class _HomeState extends State<Home> {
     return TextField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-          labelText: labelTitulo, labelStyle: TextStyle(color: Colors.green)),
+          labelText: labelTitulo, labelStyle: TextStyle(color: Colors.blue)),
       textAlign: TextAlign.center,
-      style: TextStyle(color: Colors.green, fontSize: 25.0),
+      style: TextStyle(color: Colors.blue, fontSize: 25.0),
       controller: objController,
     );
   }
@@ -91,7 +70,7 @@ class _HomeState extends State<Home> {
         height: 50.0,
         child: RaisedButton(
           onPressed: _calcular,
-          child: Text("VERIFICAR",
+          child: Text("DESCOBRIR",
               style: TextStyle(color: Colors.white, fontSize: 20.0)),
           color: Colors.lightBlueAccent,
         ),
@@ -110,7 +89,7 @@ class _HomeState extends State<Home> {
 _foto() {
   return Center(
     child: Image.network(
-      'https://ichef.bbci.co.uk/news/800/cpsprodpb/15E02/production/_104620698_prmo_imc_br-nc.png',
+      'http://www.coxinhanerd.com.br/wp-content/uploads/2020/08/77-2.jpg',
       height: 150,
       width: 150,
     ),
